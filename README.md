@@ -10,8 +10,8 @@ vagrant@sivakumarvunnam:~/Dockerizing-Angular-App$ npm install -g @angular/cli@7
 Generate a new app:
 
 ```
-vagrant@sivakumarvunnam:~/Dockerizing-Angular-App$ ng new Dockerizing-React-App
-vagrant@sivakumarvunnam:~/Dockerizing-Angular-App$ cd Dockerizing-React-App
+vagrant@sivakumarvunnam:~/Dockerizing-Angular-App$ ng new Dockerizing-Angular-App
+vagrant@sivakumarvunnam:~/Dockerizing-Angular-App$ cd Dockerizing-Angular-App
 
 ```
 
