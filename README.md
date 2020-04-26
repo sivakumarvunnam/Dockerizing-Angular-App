@@ -64,3 +64,34 @@ EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 
 ```
+```
+Here, we take advantage of the multistage build pattern to create a temporary image used for building the artifact – the production-ready React static files – that is then copied over to the production image. The temporary build image is discarded along with the original files and folders associated with the image. This produces a lean, production-ready image.
+
+Create the following folder along with a nginx.conf file:
+
+```
+└── nginx
+    └── nginx.conf
+```
+nginx.conf:
+
+```
+server {
+
+  listen 80;
+
+  location / {
+    root   /usr/share/nginx/html;
+    index  index.html index.htm;
+    try_files $uri $uri/ /index.html;
+  }
+
+  error_page   500 502 503 504  /50x.html;
+
+  location = /50x.html {
+    root   /usr/share/nginx/html;
+  }
+
+}
+
+```
