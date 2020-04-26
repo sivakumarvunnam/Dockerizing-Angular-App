@@ -64,6 +64,15 @@ EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 
 ```
+
+Two important things to note:
+
+First, we take advantage of the multistage build pattern to create a temporary image used for building the artifact – the production-ready Angular static files – that is then copied over to the production image. The temporary build image is discarded along with the original files, folders, and dependencies associated with the image. This produces a lean, production-ready image.
+
+In other words, the only thing kept from the first image is the compiled distribution code.
+
+Next, the unit and e2e tests are run in the build process, so the build will fail if the tests do not succeed.
+
 Create the following folder along with a nginx.conf file:
 
 ```
