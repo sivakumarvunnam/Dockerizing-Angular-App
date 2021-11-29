@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-20.04
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # need to checkout "all commits" for certain features to work (e.g., get all changed files)
+      - name: Extract branch name
+        id: extract_branch
+        uses: keptn/gh-action-extract-branch-name@main
+      - name: Print outputs
+        run: |
+          echo "GIT_SHA=${{ steps.extract_branch.outputs.GIT_SHA }}"
+          echo "BRANCH_SLUG=${{ steps.extract_branch.outputs.BRANCH_SLUG }}"
+          echo "BRANCH=${{ steps.extract_branch.outputs.BRANCH }}"
+     - uses: mr-smithers-excellent/docker-build-push@v3
+        name: Build & Push Docker image
+        with:
+          image: sivakumarvunnam/dockerizing-angular-app
+          tag: ${{ steps.extract_branch.outputs.BRANCH }}
+          registry: docker.io
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
