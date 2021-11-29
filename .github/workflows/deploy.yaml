@@ -17,11 +17,20 @@ jobs:
           echo "GIT_SHA=${{ steps.extract_branch.outputs.GIT_SHA }}"
           echo "BRANCH_SLUG=${{ steps.extract_branch.outputs.BRANCH_SLUG }}"
           echo "BRANCH=${{ steps.extract_branch.outputs.BRANCH }}"
+      - name: Generate Tag
+        id: gen_tag
+        run: |
+           if [[ ${{ steps.extract_branch.outputs.BRANCH }} == 'master' ]]; then
+             TAG=latest
+           else
+             TAG=${{ steps.extract_branch.outputs.BRANCH }}
+           fi
+           echo '::set-output name=tag::'$TAG
       - uses: mr-smithers-excellent/docker-build-push@v3
         name: Build & Push Docker image
         with:
           image: sivakumarvunnam/dockerizing-angular-app
-          tag: ${{ steps.extract_branch.outputs.BRANCH }}
+          tag: ${{ steps.gen_tag.outputs.TAG }}
           registry: docker.io
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
