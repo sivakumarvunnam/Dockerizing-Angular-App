@@ -31,7 +31,7 @@ jobs:
           echo "GIT_SHA=${{ steps.extract_branch.outputs.GIT_SHA }}"
           echo "BRANCH_SLUG=${{ steps.extract_branch.outputs.BRANCH_SLUG }}"
           echo "BRANCH=${{ steps.extract_branch.outputs.BRANCH }}"
-     - uses: mr-smithers-excellent/docker-build-push@v3
+      - uses: mr-smithers-excellent/docker-build-push@v3
         name: Build & Push Docker image
         with:
           image: sivakumarvunnam/dockerizing-angular-app
