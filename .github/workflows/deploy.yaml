@@ -32,7 +32,7 @@ jobs:
       - uses: mr-smithers-excellent/docker-build-push@v3
         name: Build & Push Docker image
         with:
-          image: sivakumarvunnam/${{ steps.gen_tag.outputs.REPO_NAME }}
+          image: ${{ steps.gen_tag.outputs.REPO_NAME }}
           tag: ${{ steps.gen_tag.outputs.TAG }}
           registry: docker.io
           username: ${{ secrets.DOCKER_USERNAME }}
