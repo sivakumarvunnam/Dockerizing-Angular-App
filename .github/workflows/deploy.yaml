@@ -28,10 +28,14 @@ jobs:
            fi
            echo '::set-output name=tag::'$TAG
            echo '::set-output name=tag::'$REPO_NAME
+      - uses: ASzc/change-string-case-action@v1
+        id: string
+        with:
+          string: ${{ steps.gen_tag.outputs.REPO_NAME }}
       - uses: mr-smithers-excellent/docker-build-push@v3
         name: Build & Push Docker image
         with:
-          image: sivakumarvunnam/${{ lowercase(github.repository) }}
+          image: sivakumarvunnam/${{ steps.string.outputs.lowercase }}
           tag: ${{ steps.gen_tag.outputs.TAG }}
           registry: docker.io
           username: ${{ secrets.DOCKER_USERNAME }}
