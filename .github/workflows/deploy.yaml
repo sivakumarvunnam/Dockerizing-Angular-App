@@ -20,16 +20,18 @@ jobs:
       - name: Generate Tag
         id: gen_tag
         run: |
+           REPO_NAME=${{ github.event.repository.name }}
            if [[ ${{ steps.extract_branch.outputs.BRANCH }} == 'master' ]]; then
              TAG=latest
            else
              TAG=${{ steps.extract_branch.outputs.BRANCH }}
            fi
            echo '::set-output name=tag::'$TAG
+           echo '::set-output name=tag::'$REPO_NAME
       - uses: mr-smithers-excellent/docker-build-push@v3
         name: Build & Push Docker image
         with:
-          image: sivakumarvunnam/${{ github.event.repository.name }}
+          image: sivakumarvunnam/${{ steps.gen_tag.outputs.REPO_NAME }}
           tag: ${{ steps.gen_tag.outputs.TAG }}
           registry: docker.io
           username: ${{ secrets.DOCKER_USERNAME }}
