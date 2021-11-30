@@ -32,6 +32,8 @@ jobs:
         id: string
         with:
           string: ${{ steps.gen_tag.outputs.REPO_NAME }}
+      - id: step2
+        run: echo ${{ steps.string.outputs.lowercase }}
       - uses: mr-smithers-excellent/docker-build-push@v3
         name: Build & Push Docker image
         with:
