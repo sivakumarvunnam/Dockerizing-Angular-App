@@ -20,7 +20,8 @@ jobs:
       - name: Generate Tag
         id: gen_tag
         run: |
-           echo REPO_NAME=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]') >> $GITHUB_ENV
+           REPO_NAME=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]') >> $GITHUB_ENV
+           echo $REPO_NAME
            if [[ ${{ steps.extract_branch.outputs.BRANCH }} == 'master' ]]; then
              TAG=latest
            else
@@ -31,7 +32,7 @@ jobs:
       - uses: mr-smithers-excellent/docker-build-push@v3
         name: Build & Push Docker image
         with:
-          image: sivakumarvunnam/dockerizing-angular-app
+          image: sivakumarvunnam/${{ steps.gen_tag.outputs.REPO_NAME }}
           tag: ${{ steps.gen_tag.outputs.TAG }}
           registry: docker.io
           username: ${{ secrets.DOCKER_USERNAME }}
