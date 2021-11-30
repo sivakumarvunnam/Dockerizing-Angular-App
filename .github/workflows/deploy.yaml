@@ -21,7 +21,6 @@ jobs:
         id: gen_tag
         run: |
            REPO_NAME=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]') >> $GITHUB_ENV
-           echo 'repo name is : $REPO_NAME'
            if [[ ${{ steps.extract_branch.outputs.BRANCH }} == 'master' ]]; then
              TAG=latest
            else
@@ -29,6 +28,7 @@ jobs:
            fi
            echo '::set-output name=tag::'$TAG
            echo '::set-output name=repo_name::'$REPO_NAME
+           echo 'repo name is : '$REPO_NAME
       - uses: mr-smithers-excellent/docker-build-push@v3
         name: Build & Push Docker image
         with:
