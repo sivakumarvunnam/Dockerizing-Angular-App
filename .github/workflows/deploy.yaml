@@ -31,7 +31,7 @@ jobs:
       - uses: mr-smithers-excellent/docker-build-push@v3
         name: Build & Push Docker image
         with:
-          image: sivakumarvunnam/Dockerizing-Angular-App
+          image: sivakumarvunnam/${{ lowercase(github.repository) }}
           tag: ${{ steps.gen_tag.outputs.TAG }}
           registry: docker.io
           username: ${{ secrets.DOCKER_USERNAME }}
