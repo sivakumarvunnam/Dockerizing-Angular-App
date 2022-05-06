@@ -20,21 +20,14 @@ on:
         default: 'Google Cloud,[AWS],GCP'
 
 jobs:
-
+  # This workflow contains a single job called "build"
   build:
-
-    runs-on: ubuntu-latest
-
+    runs-on: ubuntu-20.04
     steps:
       - name: Print environment
         run: echo ${{ github.event.inputs.environment }}
       - name: Print provider
         run: echo ${{ github.event.inputs.provider }}
-jobs:
-  # This workflow contains a single job called "build"
-  build:
-    runs-on: ubuntu-20.04
-    steps:
       - name: Check out code
         uses: actions/checkout@v2
         with:
