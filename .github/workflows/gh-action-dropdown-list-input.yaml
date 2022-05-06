@@ -1,0 +1,29 @@
+name: gh-action-dropdown-list-input
+
+on:
+  workflow_dispatch:
+    inputs:
+      default:
+        description: 'Default'
+        required: true
+        default: 'default'
+      environment:
+        description: 'Environment'
+        required: true
+        default: 'dev,staging,[uat],prod'
+      provider:
+        description: 'Provider'
+        required: true
+        default: 'Google Cloud,[AWS],GCP'
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Print environment
+        run: echo ${{ github.event.inputs.environment }}
+      - name: Print provider
+        run: echo ${{ github.event.inputs.provider }}
