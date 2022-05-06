@@ -1,5 +1,35 @@
 name: CI
-on: [pull_request, push]
+on: 
+  pull_request:
+   - "*"
+  push:
+   - "*"
+  workflow_dispatch:
+    inputs:
+      default:
+        description: 'Default'
+        required: true
+        default: 'default'
+      environment:
+        description: 'Environment'
+        required: true
+        default: 'dev,staging,[uat],prod'
+      provider:
+        description: 'Provider'
+        required: true
+        default: 'Google Cloud,[AWS],GCP'
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Print environment
+        run: echo ${{ github.event.inputs.environment }}
+      - name: Print provider
+        run: echo ${{ github.event.inputs.provider }}
 jobs:
   # This workflow contains a single job called "build"
   build:
